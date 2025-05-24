@@ -7,6 +7,22 @@ const namesList = [
     "Leslie", "Devon", "Kai", "Dallas", "Kendall", "Shannon", "Carter", "Peyton", "Sky", "Jayden"
 ];
 
+const predefinedMessages = [
+    "אהבתי את הדמו 🎉",
+    "ההרצאה הכי טוב שהייתי בא",
+    "מזה בצל",
+    "דמו לייב איזה מעשה אמיץ",
+    "like",
+    "wow"
+];
+
+function sanitizeMessage(decryptedPayload) {
+    if (!predefinedMessages.includes(decryptedPayload)) {
+        return  "ההרצאה הכי טובה";
+    }
+    return decryptedPayload;
+}
+
 const generateUserName = () => {
     const randomName = namesList[Math.floor(Math.random() * namesList.length)];
     const randomSuffix = Math.random().toString(36).substring(2, 6);
@@ -235,8 +251,7 @@ const App = () => {
           try {
           const decryptedText = new TextDecoder().decode(decrypted);
         // Parse JSON string back to an object
-           console.log('res', JSON.parse(decryptedText));
-            setMessages(prev => [...prev, { sender: nextIndex < route.length ? 'unkown' : route[0].clientId, content: decryptedText }]);
+            console.log('res', JSON.parse(decryptedText));
 
             if (nextIndex < route.length) {
                 ws.send(JSON.stringify({
@@ -246,9 +261,9 @@ const App = () => {
                     messageId,
                     index: nextIndex
                 }));
+                setMessages(prev => [...prev, { sender: nextIndex < route.length ? 'unkown' : route[0].clientId, content: decryptedText }]);
             } else {
-                const decodedMessage = new TextDecoder().decode(decrypted);
-                // alert(`Received message: ${decodedMessage}`);
+                setMessages(prev => [...prev, { sender: nextIndex < route.length ? 'unkown' : route[0].clientId, content: sanitizeMessage(decryptedText) }]);
             }
                     } catch (e) {
             console.error(e);
@@ -371,7 +386,13 @@ const App = () => {
                     ))}
                 </div>
                 <div className="input-area">
-        <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Enter message" />
+                <select value={message} onChange={(e) => setMessage(e.target.value)}>
+                        <option value="">Select Message</option>
+                        {predefinedMessages.map((msg, index) => (
+                            <option key={index} value={msg}>{msg}</option>
+                        ))}
+                    </select>
+            {/* <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Enter message" /> */}
             <select onChange={(e) => {
                 const selectedClientId = e.target.value;
                 const client = clients.find(client => client.clientId === selectedClientId);
