@@ -17,10 +17,12 @@ const predefinedMessages = [
 ];
 
 function sanitizeMessage(decryptedPayload) {
-    if (!predefinedMessages.includes(decryptedPayload)) {
-        return  "ההרצאה הכי טובה";
+    let m = decryptedPayload?.split(':')[1] || "";
+    m = m.trim().replace(/^"+|"+$/g, "");
+    if (!predefinedMessages.includes(m)) {
+        return "ההרצאה הכי טובה";
     }
-    return decryptedPayload;
+  return decryptedPayload;
 }
 
 const generateUserName = () => {
