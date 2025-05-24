@@ -1,7 +1,6 @@
 {
-  "name": "create-react-app",
+  "name": "onion-chat-frontend",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "postcss-normalize": "^10.0.1",
