@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import './styles/styles.css';
 const namesList = [
     "Alex", "Jordan", "Taylor", "Casey", "Morgan", "Skyler", "Jamie", "Riley", "Drew", "Avery",
     "Cameron", "Quinn", "Reese", "Logan", "Dakota", "Phoenix", "Blake", "Jesse", "Charlie", "Alexis",
