@@ -8,19 +8,19 @@ const namesList = [
 ];
 
 const predefinedMessages = [
-    "אהבתי את הדמו 🎉",
-    "ההרצאה הכי טוב שהייתי בא",
-    "מזה בצל",
-    "דמו לייב איזה מעשה אמיץ",
-    "like",
-    "wow"
+  "I loved the demo 🎉",
+  "The best talk I've ever attended",
+  "What is an onion",
+  "A live demo – what a brave move",
+  "like",
+  "wow"
 ];
 
 function sanitizeMessage(decryptedPayload) {
     let m = decryptedPayload?.split(':')[1] || "";
     m = m.trim().replace(/^"+|"+$/g, "");
     if (!predefinedMessages.includes(m)) {
-        return "ההרצאה הכי טובה";
+        return "What is an onion";
     }
   return decryptedPayload;
 }
